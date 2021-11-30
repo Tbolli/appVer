@@ -5,21 +5,26 @@ import {useState,useEffect,useRef} from 'react'
 
 function App() {
   const apiKey ="9d17286957d540f79ad112230211411"
+  //Entered city name
+  const [cityIn,setCityIn] = useState("")
+  //Force rerender
   const [rerender,setRerender] = useState(false)
-  const responseDataRef= useRef({})
-  
+  //responese from weatherApi
+  let responseDataRef= useRef({})
+  let lat=0.0;
+  let lon=0.0;
+  //Success function to set lat, lon  
+  //in query string when the component mounted
+  const showPosition = (pos)=>{
+    lat = pos.coords.latitude
+    lon = pos.coords.longitude
+    getWeatherData(lat+" "+lon)
+  }
+
+  //Get current position then calling the success function
   useEffect(()=>{
-    axios.get("http://api.weatherapi.com/v1/forecast.json?key=9d17286957d540f79ad112230211411&q=Molde&days=6&aqi=no&alerts=no").then(res=> {
-      responseDataRef.current= res
-      document.getElementById("imgId1").src = responseDataRef.current.data.current.condition.icon
-      document.getElementById("currentTempId").innerHTML = responseDataRef.current.data.current.temp_c
-      document.getElementById("currentWindSpeedId").innerHTML = "&nbsp"+responseDataRef.current.data.current.wind_kph+ "kph/" + responseDataRef.current.data.current.wind_dir
-      document.getElementById("Group_2").style.transform= "rotate("+responseDataRef.current.data.current.wind_degree+"deg)" 
-      
-      setRerender(true)
-    })
+    navigator.geolocation.getCurrentPosition(showPosition)
   },[])
- //dayHour = responseDataRef.current.data.forecast.forecastday[0].hour
   
 const findHours = (currentHour)=>{
     //find next 5 hours to display
@@ -42,18 +47,40 @@ const findCurrentHour = ()=>{
   return new Date().getHours()
 }
 
-const citySubmit = ()=>{
-
+const citySubmit = (ev)=>{
+  console.log(cityIn)
 }
+const getWeatherData =(query)=>{
+  axios.get("http://api.weatherapi.com/v1/forecast.json?key=9d17286957d540f79ad112230211411&q="+query+"&days=6&aqi=no&alerts=no").then((res)=>{
+      responseDataRef.current = res
+      setRerender(true)
+    })
+}
+
+const keyHandler =(e)=>{
+  e.preventDefault()
+  if(e.key === "Enter"){
+    if(rerender) setRerender(false)
+    cityIn.length == 0?getWeatherData(document.getElementById("cityNameId").placeholder):getWeatherData(cityIn)
+  }else{
+    setCityIn(document.getElementById("cityNameId").value)
+  }
+}
+  if(rerender){
+    document.getElementById("imgId1").src = responseDataRef.current.data.current.condition.icon
+    document.getElementById("currentTempId").innerHTML = responseDataRef.current.data.current.temp_c
+    document.getElementById("currentWindSpeedId").innerHTML = "&nbsp&nbsp"+responseDataRef.current.data.current.wind_kph+ "kph/" + responseDataRef.current.data.current.wind_dir
+    document.getElementById("Group_2").style.transform= "rotate("+responseDataRef.current.data.current.wind_degree+"deg)" 
+    document.getElementById("cityNameId").placeholder = responseDataRef.current.data.location.name
+  }
   
-  //console.log(responseDataRef.current.data.forecast.forecastday[0].hour[0])
+  
   return (
     <div className="App">
-      
       <div className="BackGround"></div>
       <div className="WhiteArea">
 
-      <input onSubmit={citySubmit} type="text" placeholder="Molde" id="cityNameId"/>
+      <input  onKeyUp={e=>keyHandler(e)} type="text" placeholder="Loading..." id="cityNameId"/>
 
       <div className="currentArea">
         <div className="currentTempArea">
@@ -70,9 +97,8 @@ const citySubmit = ()=>{
           <path id="Path_11" data-name="Path 11" d="M10.785,0V19.9L0,25.29Z" transform="translate(9.019 20.548)" fill="#fff"/>
         </svg>
         </div>
-
       </div>
-
+      {/*hourly forecast, 5 hours from your current time*/}
         <div id="hourForecastID" className="hourForecast">
           {!rerender ?"Loading...":findHours(findCurrentHour()).map((hour)=>(
           <div className="hourPluss">

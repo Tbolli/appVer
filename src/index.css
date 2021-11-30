@@ -1,47 +1,49 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300&family=Outfit:wght@100;200;300;400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300&family=Outfit:wght@100;200;300;400&display=swap");
 
-
-*{
+* {
   overflow-x: hidden;
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-image: url("https://i.picsum.photos/id/971/1920/1080.jpg?hmac=SDH1lXJUqWI8rJ41Yr7PvKW1aAA-nj559Z2DU888BA8");
   background-repeat: no-repeat;
-  background-attachment: fixed;  
+  background-attachment: fixed;
   background-size: cover;
 }
 
-#cityNameId{
+#cityNameId {
   font-family: "Outfit";
   width: 100%;
   padding: 0;
   font-size: 60px;
-  cursor:text;
-  border:none;
+  cursor: text;
+  border: none;
   margin-top: 10px;
   text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-#cityNameId:focus{
+#cityNameId:focus {
   outline: none;
 }
 
-#cityNameId::placeholder{
+#cityNameId::placeholder {
   color: black;
   font-family: "Outfit";
 }
 
-.WhiteArea{
-  width: calc(100vw * 1030/1920);
-  height: calc(747/1030*calc(100vw * 1030/1920));
+.WhiteArea {
+  width: calc(100vw * 1030 / 1920);
+  height: calc(747 / 1030 * calc(100vw * 1030 / 1920));
   min-width: 600px;
   min-height: 500px;
   background-color: rgb(255, 255, 255);
@@ -49,60 +51,63 @@ body {
   margin: 3% auto 0 auto;
 }
 
-.WhiteAreaText{
-  margin:0;
+.WhiteAreaText {
+  margin: 0;
 }
 
-.WhiteArea h1{
+.WhiteArea h1 {
   margin: 0;
-  padding:10px;
+  padding: 10px;
   font-family: "Outfit";
   text-align: center;
 }
 
-.globalTemps::after{
-  content:"°";
+.globalTemps::after {
+  content: "°";
 }
 
-.currentArea{
+.currentArea {
   width: 60%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 10px auto 0 auto;
-  border-bottom:1.5px solid #888888;
-
+  border-bottom: 1.5px solid #888888;
 }
-#currentTempId{
+#currentTempId {
   font-size: 35px;
 }
 
-.currentTempArea{
+.currentTempArea {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-.currentTempArea h2{
-  font-family: 'Open Sans',sans-serif;
+.currentTempArea h2 {
+  font-family: "Open Sans", sans-serif;
 }
-.pointerAndWindArea{
+.currentWindArea {
+  margin-right: 7px;
+}
+.pointerAndWindArea {
   display: flex;
   overflow-y: hidden;
   flex-direction: row;
   align-items: center;
   padding-top: 10px;
   padding-right: 10px;
+  padding-bottom: 10px;
 }
 
-.greyColor{
+.greyColor {
   color: #707070;
 }
 
-#Group_2{
+#Group_2 {
   margin-left: 10px;
 }
 
-.hourForecast{
+.hourForecast {
   margin: 10px auto 0 auto;
   width: 60%;
   display: flex;
@@ -111,44 +116,74 @@ body {
   justify-content: space-between;
 }
 
-.hourForecast p{
-  margin:0;
+.hourForecast p {
+  margin: 0;
   font-size: 16px;
 }
-.hours{
+.hours {
   font-family: "Open Sans";
 }
 
-.hourPluss{
+.hourPluss {
   display: flex;
   flex-direction: column;
 }
 
-@media only screen and (max-width: 700px) and (min-width: 500px){
-  .WhiteArea{
-    min-width: 400px;
+.degrees {
+  font-family: "Open Sans";
+  font-weight: 600;
+}
+@media only screen and (min-width: 1400px) {
+  .currentArea {
+    width: 50%;
   }
-  .hourForecast{
-    width: 80%;
+  .hourForecast {
+    width: 50%;
   }
-  .currentArea{
-    width: 80%;
+  #cityNameId {
+    font-size: 80px;
+    margin-bottom: 30px;
   }
 }
 
-@media only screen and (max-width: 500px){
-  .WhiteArea{
+@media only screen and (max-width: 700px) and (min-width: 500px) {
+  .WhiteArea {
+    min-width: 500px;
+  }
+  .hourForecast {
+    width: 80%;
+  }
+  .currentArea {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .WhiteArea {
     width: 100vw;
-    margin:0;
+    margin: 0;
     border-radius: 0;
     min-width: 0;
     height: 100vh;
+    background: linear-gradient(#fffffff8, hsl(204, 96%, 82%));
   }
-  .currentArea{
+  .currentArea {
     width: 80%;
   }
-  .hourForecast{
+  .hourForecast {
     width: 80%;
+  }
+  #cityNameId {
+    background: none;
+  }
+  #currentTempId {
+    font-size: 25px;
+  }
+  #Group_2 {
+    width: 35px;
+    height: 45px;
+  }
+  #imgId1 {
+    width: 70px;
   }
 }
-
