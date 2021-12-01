@@ -20,10 +20,12 @@ function App() {
     lon = pos.coords.longitude
     getWeatherData(lat+" "+lon)
   }
-
+  const ERR =()=>{
+    getWeatherData("New York")
+  }
   //Get current position then calling the success function
   useEffect(()=>{
-    navigator.geolocation.getCurrentPosition(showPosition)
+    navigator.geolocation.getCurrentPosition(showPosition,ERR)
   },[])
   
 const findHours = (currentHour)=>{
@@ -51,16 +53,16 @@ const citySubmit = (ev)=>{
   console.log(cityIn)
 }
 const getWeatherData =(query)=>{
+  if(rerender) setRerender(false)
   axios.get("http://api.weatherapi.com/v1/forecast.json?key=9d17286957d540f79ad112230211411&q="+query+"&days=6&aqi=no&alerts=no").then((res)=>{
       responseDataRef.current = res
       setRerender(true)
-    })
+    }).catch(err => console.log(err))
 }
 
 const keyHandler =(e)=>{
   e.preventDefault()
   if(e.key === "Enter"){
-    if(rerender) setRerender(false)
     cityIn.length == 0?getWeatherData(document.getElementById("cityNameId").placeholder):getWeatherData(cityIn)
   }else{
     setCityIn(document.getElementById("cityNameId").value)
@@ -80,7 +82,7 @@ const keyHandler =(e)=>{
       <div className="BackGround"></div>
       <div className="WhiteArea">
 
-      <input  onKeyUp={e=>keyHandler(e)} type="text" placeholder="Loading..." id="cityNameId"/>
+      <input onFocus={()=> document.getElementById("cityNameId").value =""} onKeyUp={e=>keyHandler(e)} type="text" placeholder="Loading..." id="cityNameId"/>
 
       <div className="currentArea">
         <div className="currentTempArea">
