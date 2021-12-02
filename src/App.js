@@ -23,9 +23,13 @@ function App() {
   const ERR =()=>{
     getWeatherData("New York")
   }
+
   //Get current position then calling the success function
   useEffect(()=>{
     navigator.geolocation.getCurrentPosition(showPosition,ERR)
+
+  
+  
   },[])
   
 const findHours = (currentHour)=>{
@@ -49,9 +53,6 @@ const findCurrentHour = ()=>{
   return new Date().getHours()
 }
 
-const citySubmit = (ev)=>{
-  console.log(cityIn)
-}
 const getWeatherData =(query)=>{
   if(rerender) setRerender(false)
   axios.get("http://api.weatherapi.com/v1/forecast.json?key=9d17286957d540f79ad112230211411&q="+query+"&days=6&aqi=no&alerts=no").then((res)=>{
@@ -74,15 +75,24 @@ const keyHandler =(e)=>{
     document.getElementById("currentWindSpeedId").innerHTML = "&nbsp&nbsp"+responseDataRef.current.data.current.wind_kph+ "kph/" + responseDataRef.current.data.current.wind_dir
     document.getElementById("Group_2").style.transform= "rotate("+responseDataRef.current.data.current.wind_degree+"deg)" 
     document.getElementById("cityNameId").placeholder = responseDataRef.current.data.location.name
+    document.getElementById("countryId").innerText = responseDataRef.current.data.location.country
   }
+
   
-  
+
   return (
+    
     <div className="App">
-      <div className="BackGround"></div>
+      <div className="firstFront">
+        <div className="encapsulateH1">
+          <h1 id="simpleWeatherId">Simple weather</h1>
+        </div>
+      <input onFocus={()=> document.getElementById("cityNameId").value =""} onKeyUp={e=>keyHandler(e)} type="text" placeholder="Loading..." id="cityNameId"/>
+      <i id="countryId">Weather for the sophistocated</i>
+      </div>
       <div className="WhiteArea">
 
-      <input onFocus={()=> document.getElementById("cityNameId").value =""} onKeyUp={e=>keyHandler(e)} type="text" placeholder="Loading..." id="cityNameId"/>
+      
 
       <div className="currentArea">
         <div className="currentTempArea">
@@ -111,9 +121,9 @@ const keyHandler =(e)=>{
           ))}
         </div>
 
-      </div>
+        
 
-    <div className="imgBackgroundDiv"></div>|  
+      </div>
     </div>
 
   );

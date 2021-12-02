@@ -1,6 +1,25 @@
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300&family=Outfit:wght@100;200;300;400&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300&family=Outfit:wght@100;200;300;400&family=Playfair+Display:ital@0;1&display=swap');
 
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
 * {
   overflow-x: hidden;
 }
@@ -12,10 +31,43 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url("https://i.picsum.photos/id/971/1920/1080.jpg?hmac=SDH1lXJUqWI8rJ41Yr7PvKW1aAA-nj559Z2DU888BA8");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
+}
+.App{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin:5vh;
+  height: 90vh;
+  
+}
+
+.firstFront{
+  background-color: #E76F51;
+  grid-column-start:1 ;
+  margin: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.encapsulateH1{
+  width: 100%;
+  margin-bottom: 100px;
+}
+#simpleWeatherId{
+  color: white;
+  font-size: 80px;
+  font-family: "Playfair Display";
+  font-weight: 200;
+  width:300px;
+  margin:0 0 0 20px;
+  
+}
+.firstFront i{
+  margin: 0;
+  color: white;
+  font-size: 30px;
+  font-family:"Outfit";
+  overflow: hidden;
 }
 
 #cityNameId {
@@ -25,11 +77,12 @@ body {
   font-size: 60px;
   cursor: text;
   border: none;
-  margin-top: 10px;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  background: none;
+  color: white;
 }
 
 #cityNameId:focus {
@@ -37,18 +90,22 @@ body {
 }
 
 #cityNameId::placeholder {
-  color: black;
+  color: white;
   font-family: "Outfit";
 }
+#cityNameId::after{
+  content: ",";
+}
+
 
 .WhiteArea {
-  width: calc(100vw * 1030 / 1920);
+  /*width: calc(100vw * 1030 / 1920);
   height: calc(747 / 1030 * calc(100vw * 1030 / 1920));
-  min-width: 600px;
-  min-height: 500px;
+  min-width: 600px;*/
   background-color: rgb(255, 255, 255);
   border-radius: 30px;
-  margin: 3% auto 0 auto;
+  grid-column-start: 2;
+  margin: auto 0;
 }
 
 .WhiteAreaText {
